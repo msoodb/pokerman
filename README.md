@@ -45,3 +45,7 @@ touch .github/workflows/deploy.yml
 # Secrets Configuration
 - Go to GitHub → Settings → Secrets and Variables → Actions.
 - Add RENDER_SERVICE_ID and RENDER_API_KEY.
+
+##
+https://dashboard.render.com
+- add service and connect to pokerman github repo and deploy automatic.
