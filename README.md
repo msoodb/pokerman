@@ -28,3 +28,20 @@ Request Body: {
   "name": "John Doe",
   "age": 30
 }
+
+
+## CI/CD Workflow
+- Use GitHub Actions for automation:
+    - Add a .github/workflows/deploy.yml file.     
+    - Configure deployment steps:
+        - Build the project.
+        - Deploy to the chosen platform.
+```sh
+mkdir -p .github/workflows
+touch .github/workflows/deploy.yml
+```
+
+
+# Secrets Configuration
+- Go to GitHub → Settings → Secrets and Variables → Actions.
+- Add RENDER_SERVICE_ID and RENDER_API_KEY.
