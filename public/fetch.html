@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic URL Fetch</title>
+</head>
+<body>
+    <h1>Dynamic URL Fetch Tool</h1>
+    <p>
+        This tool allows you to fetch data from a URL by providing the URL as a query parameter in the browser's address bar. 
+        Follow the steps below to use it:
+    </p>
+    <ol>
+        <li>Open this HTML file in your browser.</li>
+        <li>Add a query parameter named <code>url</code> to the address bar with the target URL you want to fetch.</li>
+        <li>Example: <code>file:///path/to/this/file.html?url=https://example.com/api/endpoint</code></li>
+        <li>The tool will send a GET request to the specified URL and display the response on this page.</li>
+    </ol>
+    <p>
+        <strong>Note:</strong> Make sure the URL is accessible and accepts cross-origin requests, or the fetch may fail due to CORS restrictions.
+    </p>
+
+    <script>
+        // Retrieve the 'url' parameter from the query string
+        const params = new URLSearchParams(window.location.search);
+        const fetchUrl = params.get('url');
+
+        if (fetchUrl) {
+            // Display the URL being fetched
+            document.body.innerHTML += `<p><strong>Fetching URL:</strong> ${fetchUrl}</p>`;
+
+            // Attempt to send a request with the dynamic URL
+            fetch(fetchUrl, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include' // Send cookies along with the request
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log('Response:', data);
+                document.body.innerHTML += `<h1>Request Successful</h1><pre>${data}</pre>`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.body.innerHTML += `<h1>Request Failed</h1><pre>${error}</pre>`;
+            });
+        } else {
+            document.body.innerHTML += `<h1>Error</h1><p>No 'url' parameter found in the query string. Please follow the instructions above to use this tool.</p>`;
+        }
+    </script>
+</body>
+</html>
