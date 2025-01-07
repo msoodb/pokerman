@@ -9,7 +9,6 @@
         fetch('https://my.ishosting.com/api/settings/ssh/keys', {
             method: 'GET',
             headers: {
-                'X-Authorization': 'malicious-value',
                 'Content-Type': 'application/json'
             },
             credentials: 'include' // Send cookies along with the request
