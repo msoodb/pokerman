@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
 
+const port = process.env.PORT || 4000;
 const app = express();
 
 // Use CORS to allow cross-origin requests
@@ -12,6 +13,9 @@ app.use(cors());
 
 // Middleware to parse JSON body
 app.use(bodyParser.json());
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Directory to store log files
 const logDir = path.join(__dirname, 'logs');
@@ -56,7 +60,12 @@ app.get('/logs/:id', (req, res) => {
     res.sendFile(logFile);
 });
 
-// Start the server on port 4000
-app.listen(4000, () => {
-    console.log('Server is running on http://localhost:4000');
+// Fallback route for non-API routes (serves index.html)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Start the server
+app.listen(port, () => {
+    console.log(`✅ Server is running on http://localhost:${port}`);
 });
